@@ -1,0 +1,99 @@
+/* 
+    Document   : basecss
+    Author     : nb
+    Description: styles used by jQuery accordion widget
+*/
+
+root { 
+    display: block;
+}
+
+
+/* jQuery accordion styles
+----------------------------------*/
+.ui-accordion { width: 100%; }
+.ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; margin-bottom: 0; background: #eee;}
+.ui-accordion .ui-accordion-li-fix { display: inline; }
+.ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
+.ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .3em .5em .3em .7em; }
+.ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 20%; margin-top: -8px; }
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 1px; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
+.ui-accordion .ui-accordion-content-active { display: block; }
+
+
+
+/* Component containers
+----------------------------------*/
+.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; }
+.ui-widget .ui-widget { font-size: 1em; }
+.ui-widget-content { border: 1px solid #b81900; background: #eeeeee; color: #333333; border-top: 0;}
+.ui-widget-content a { color: #333333; }
+.ui-widget-header { border: 2px solid #000000; font-weight: normal; }
+
+
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6; font-weight: bold; color: #1c94c4; }
+/* color of header here */
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #000000; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce; font-weight: bold;color: #c77405; }
+.ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #b81900; background: #fffff3; font-weight: bold; color: #eb8f00; }
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
+.ui-widget :active { outline: none; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 12px sans-serif;
+}
+h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+#map-canvas {
+    height:400px;
+    width:600px;
+}
+.controls {
+    margin-top: 16px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+#pac-input {
+    background-color: #fff;
+    padding: 0 11px 0 13px;
+    width: 400px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+}
+#pac-input:focus {
+    border-color: #4d90fe;
+    margin-left: -1px;
+    padding-left: 14px;
+    /* Regular padding-left + 1. */
+    width: 401px;
+}
+.pac-container {
+    font-family: Roboto;
+}
+#type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+#type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
