@@ -55,8 +55,18 @@ h1, p {
 }
 
 #map-canvas {
+    float: left;
     height:400px;
     width:600px;
+}
+#jsOutput {
+    float: right;
+    margin-left: 200px;
+}
+
+#phpOutput {
+    float: bottom;
+    margin: 20px 20px 20px 20px;
 }
 .controls {
     margin-top: 16px;
