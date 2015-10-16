@@ -22,7 +22,11 @@
         <div id="jsOutput">JS Output</div>
         
         <div id="phpOutput">PHP BRO</div>
+        <script type="text/javascript">
+            addMarker("526", 43.612326, -79.690479);
+        </script>
         <?php
+        /*
         // put your code here
         include_once "php/Store.php";
         // Some fake markers
@@ -36,11 +40,11 @@
         
         foreach($stores as $s){
             echo $s." -- Adding to google maps<br>";
-            
+            //echo var_dump($s);
             // addMarker(id, latitude, longitude) JS 
             echo $s->markerJS();
         }               
-        
+        */
         ?>
     </body>
 </html>
