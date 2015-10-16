@@ -64,10 +64,6 @@ h1, p {
     margin-left: 200px;
 }
 
-#phpOutput {
-    float: bottom;
-    margin: 20px 20px 20px 20px;
-}
 .controls {
     margin-top: 16px;
     border: 1px solid transparent;

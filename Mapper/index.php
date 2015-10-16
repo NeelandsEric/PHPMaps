@@ -21,12 +21,10 @@
         <script type="text/javascript" src="js/Mapper.js"></script>
         <div id="jsOutput">JS Output</div>
         
-        <div id="phpOutput">PHP BRO</div>
-        <script type="text/javascript">
-            addMarker("526", 43.612326, -79.690479);
-        </script>
+        <div id="phpOutput">PHP</div>
+        
         <?php
-        /*
+        
         // put your code here
         include_once "php/Store.php";
         // Some fake markers
@@ -44,7 +42,7 @@
             // addMarker(id, latitude, longitude) JS 
             echo $s->markerJS();
         }               
-        */
+        
         ?>
     </body>
 </html>
