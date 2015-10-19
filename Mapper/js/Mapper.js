@@ -2,6 +2,7 @@
 var markers;
 var map;
 var bounds;
+var hlIndex = -1;
 var ready = false;
 var toAddMarkers = [];
 
@@ -23,16 +24,17 @@ function initialize() {
 //    map.fitBounds(bounds);
 
 
+
     toAddMarkers.forEach(function (element, index, array) {
 
-        console.log("Element @ " + index);
-        console.log(element);
+        //console.log("Element @ " + index);
+        //console.log(element);
         var la = element["lat"];
         var lo = element["long"];
         var id = element["id"];
 
-        console.log("id: " + id + "lat: " + la + "long: " + lo )
-        
+        //console.log("id: " + id + "lat: " + la + "long: " + lo)
+
         //var latlng = {lat: la, lng: lo};
         var latlng = new google.maps.LatLng(la, lo);
 
@@ -42,13 +44,18 @@ function initialize() {
             position: latlng
         });
 
+        google.maps.event.addListener(marker, 'click', function () {
+            clickMarker(marker);
+        });
+
+        //console.log(marker);
         markers.push(marker);
         bounds.extend(latlng);
         map.fitBounds(bounds);
 
     });
-    
-    
+
+
 
     ready = true;
 
@@ -64,12 +71,11 @@ function initialize() {
 
 
 
-    
+
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
-    map.addListener(searchBox, 'places_changed', function () {
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
 
-        console.log("Search disabled");
 
         return;
 
@@ -93,30 +99,76 @@ function initialize() {
                 addr: place.formatted_address
             });
 
+            google.maps.event.addListener(marker, 'click', function () {
+                clickMarker(marker);
+            });
+
             markers.push(marker);
             bounds.extend(place.geometry.location);
 
 
+
         }
         map.fitBounds(bounds);
-        printMarkers(markers);
+
 
 
     });
-    
-    
-    map.addListener('bounds_changed', mapMoved());
-    
 
+    geocodeMarkers(updateAddress);
+
+
+    google.maps.event.addListener(map, 'idle', function () {
+        showVisibleMarkers();
+
+
+    });
 
 }
+
+function updateAddress(){
+    console.log("update address done");
+}
+
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-function mapMoved(){
-    printVisibleMarkers();
+function geocodeMarkers(callback){
+    console.log("update address");
+    var geocoder = new google.maps.Geocoder();
+
+    markers.forEach(function (element, index, array) {        
+        geocoder.geocode({latLng: element.position}, function (responses) {
+            if (responses && responses.length > 0) {
+                console.log("geocoder: " + responses[0].formatted_address);
+                element.addr = responses[0].formatted_address;
+            } else {
+                element.addr = 'Unknown';
+            }
+        });
+    });
+    console.log("update address calling back");
+    if(typeof callback === 'function'){
+        callback();
+    }
+}
+
+
+
+function clickMarker(marker) {
+    // find the selected row to save the highlight when moving the map
+    console.log($('#storeTable .highlight td').id);
+    var id = marker.title;
+    //map.setCenter(marker.getPosition());
+    $('#storeTable .highlight').addClass('nohighlight');
+    $('#storeTable .highlight').removeClass('highlight');
+    $('#' + id).removeClass('nohighlight');
+    $('#' + id).addClass('highlight');
     
+
+    //<tr id="526"><td>526</td><td>20</td><td>30</td><td>5</td></tr>
 }
 
 function printMarkers() {
@@ -131,7 +183,7 @@ function printMarkers() {
 function addMarker(id, latitude, longitude) {
 
     if (!ready) {
-        console.log("1 - toAddMarkers");
+        //console.log("1 - toAddMarkers");
         //alert("Adding marker " + id);
         var marker = [];
         marker["id"] = id;
@@ -139,7 +191,7 @@ function addMarker(id, latitude, longitude) {
         marker["long"] = longitude;
         toAddMarkers.push(marker);
     } else {
-        console.log("2 - addMarker");
+        //console.log("2 - addMarker");
         var latlng = {lat: latitude, lng: longitude};
 
         var marker = new google.maps.Marker({
@@ -157,23 +209,49 @@ function addMarker(id, latitude, longitude) {
 }
 
 
-function printTo(st) {
-    $('#jsOutput').text(st);
+function showVisibleMarkers() {
+
+
+    var b = map.getBounds();
+    var marker;
+
+
+
+    //$("#storeTableDiv").empty();
+    $("table.sortable tbody").empty();
+
+    markers = sortByKey(markers, "title");
+
+    for (var i = 0; i < markers.length; i++) {
+        marker = markers[i];
+
+
+        if (b.contains(marker.getPosition()) === true) {
+            var id = marker.title;
+            var loc = marker.position; // tbd address
+            var lat = loc.lat();
+            var long = loc.lng();
+            var highlight = i === hlIndex ? "highlight" : "nohighlight";
+            //console.log(marker);
+
+            //$('#storeTableDiv').append('<div id="' + id +'" class="store nohighlight">' + loc + '</div>');   
+            $('table.sortable tbody').append('<tr id="' + id + '" class="'+highlight+'"><td id = "'+i+'">' + id + '</td><td>' + lat + '</td><td>' + long + '</td><td>' + marker.addr + '</td></tr>');
+        }
+    }
+
 }
 
+function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+        var x = a[key];
+        var y = b[key];
 
-function printVisibleMarkers(){
-    
-    markers.forEach(function(element, index, array){
-        
-        console.log(element);
-        
-        if(element.visible){
-            console.log("Element is visible");
-        }else {
-            console.log("Element is visible");
+        if (typeof x == "string")
+        {
+            x = x.toLowerCase();
+            y = y.toLowerCase();
         }
-        
-        
+
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }

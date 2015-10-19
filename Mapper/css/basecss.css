@@ -44,24 +44,43 @@ root {
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
 .ui-widget :active { outline: none; }
 
-body {
-  margin: 0;
-  padding: 0;
-  font: 12px sans-serif;
-}
-h1, p {
-  margin: 0;
-  padding: 0;
-}
-
 #map-canvas {
     float: left;
-    height:400px;
-    width:600px;
+    width:40%;
+    height:45%;
 }
-#jsOutput {
-    float: right;
-    margin-left: 200px;
+
+#storeTableDiv {
+    float: left;    
+}
+
+#storeTable .store {
+    //float: right;
+    //padding:15px 25px;
+    //margin:10px 0;
+}
+
+
+table.sortable {
+    background-color:black;
+}
+table.sortable thead{
+    
+    background-color:black;
+    color:orange;
+    font-weight: bold;
+    cursor: default;
+}
+
+.nohighlight{
+    color: black;
+    font-weight: bold;
+    background-color: lightgreen;
+}
+.highlight{
+    color: black;
+    font-weight: bold;
+    background-color: #1c94c4;
 }
 
 .controls {
