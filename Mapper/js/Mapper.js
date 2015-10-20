@@ -2,7 +2,7 @@
 var markers;
 var map;
 var bounds;
-var hlIndex = -1;
+var hlID = -1;
 var ready = false;
 var toAddMarkers = [];
 
@@ -159,14 +159,14 @@ function geocodeMarkers(callback){
 
 function clickMarker(marker) {
     // find the selected row to save the highlight when moving the map
-    console.log($('#storeTable .highlight td').id);
+    
     var id = marker.title;
-    //map.setCenter(marker.getPosition());
+    hlID = id;
+    map.setCenter(marker.getPosition());
     $('#storeTable .highlight').addClass('nohighlight');
     $('#storeTable .highlight').removeClass('highlight');
     $('#' + id).removeClass('nohighlight');
-    $('#' + id).addClass('highlight');
-    
+    $('#' + id).addClass('highlight');    
 
     //<tr id="526"><td>526</td><td>20</td><td>30</td><td>5</td></tr>
 }
@@ -231,11 +231,11 @@ function showVisibleMarkers() {
             var loc = marker.position; // tbd address
             var lat = loc.lat();
             var long = loc.lng();
-            var highlight = i === hlIndex ? "highlight" : "nohighlight";
+            var highlight = id === hlID ? "highlight" : "nohighlight";
             //console.log(marker);
 
             //$('#storeTableDiv').append('<div id="' + id +'" class="store nohighlight">' + loc + '</div>');   
-            $('table.sortable tbody').append('<tr id="' + id + '" class="'+highlight+'"><td id = "'+i+'">' + id + '</td><td>' + lat + '</td><td>' + long + '</td><td>' + marker.addr + '</td></tr>');
+            $('table.sortable tbody').append('<tr id="' + id + '" class="'+highlight+'"><td>' + id + '</td><td>' + lat + '</td><td>' + long + '</td><td>' + marker.addr + '</td></tr>');
         }
     }
 
