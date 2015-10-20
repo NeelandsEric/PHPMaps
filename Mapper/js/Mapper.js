@@ -5,6 +5,29 @@ var bounds;
 var hlID = -1;
 var ready = false;
 var toAddMarkers = [];
+var selectedMarker;
+
+
+var icons = {
+    costco: {
+        icon: 'pics/warehouse-pushpin.png'
+    },
+    costcoNotSel: {
+        icon: 'pics/warehouse-pushpinNotSeleced.png'
+    },
+    costcoSel: {
+        icon: 'pics/warehouse-pushpinSelected.png'
+    },
+    costcoSel2: {
+        icon: 'pics/warehouse-pushpinSelected2.png'
+    },
+    costcoConstruction: {
+     icon: 'pics/warehouse-pushpinConstruction.png'
+    },
+    longos: {
+        icon: ''
+    }
+};
 
 function initialize() {
 
@@ -41,7 +64,9 @@ function initialize() {
         var marker = new google.maps.Marker({
             map: map,
             title: id,
-            position: latlng
+            position: latlng,
+            icon: icons['costco'].icon,
+            size: 5
         });
 
         google.maps.event.addListener(marker, 'click', function () {
@@ -115,7 +140,7 @@ function initialize() {
 
     });
 
-    geocodeMarkers(updateAddress);
+    geocodeMarkers();
 
 
     google.maps.event.addListener(map, 'idle', function () {
@@ -126,40 +151,36 @@ function initialize() {
 
 }
 
-function updateAddress(){
-    console.log("update address done");
-}
-
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-function geocodeMarkers(callback){
-    console.log("update address");
+function geocodeMarkers(){
+    //console.log("update address");
     var geocoder = new google.maps.Geocoder();
 
     markers.forEach(function (element, index, array) {        
         geocoder.geocode({latLng: element.position}, function (responses) {
             if (responses && responses.length > 0) {
-                console.log("geocoder: " + responses[0].formatted_address);
+                //console.log("geocoder: " + responses[0].formatted_address);
                 element.addr = responses[0].formatted_address;
             } else {
                 element.addr = 'Unknown';
             }
         });
-    });
-    console.log("update address calling back");
-    if(typeof callback === 'function'){
-        callback();
-    }
+    });    
 }
 
 
 
 function clickMarker(marker) {
     // find the selected row to save the highlight when moving the map
-    
+    if(selectedMarker != undefined){
+        selectedMarker.setIcon(icons['costco'].icon);
+    }
+    selectedMarker = marker;
+    selectedMarker.setIcon(icons['costcoSel'].icon);
     var id = marker.title;
     hlID = id;
     map.setCenter(marker.getPosition());
