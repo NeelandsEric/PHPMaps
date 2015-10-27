@@ -39,7 +39,11 @@
 
         <?php
         // put your code here
+        //define("RelativePath", "");
+        //include_once "php/Common.php";
+        
         include_once "php/Store.php";
+        
         // Some fake markers
         $stores = [];
         // [store ID, storeTemp, outsideTemp, energy, moneyPerHour], lat, long

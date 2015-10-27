@@ -183,7 +183,8 @@ function clickMarker(marker) {
     selectedMarker.setIcon(icons['costcoSel'].icon);
     var id = marker.title;
     hlID = id;
-    map.setCenter(marker.getPosition());
+    map.panTo(marker.getPosition());
+    
     $('#storeTable .highlight').addClass('nohighlight');
     $('#storeTable .highlight').removeClass('highlight');
     $('#' + id).removeClass('nohighlight');
